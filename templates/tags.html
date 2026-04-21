@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %} 标签云 | {{ config.title }} {% endblock %}
+
+{% block content %}
+<div class="tags-page">
+    <div class="section-header">
+        <h1 class="section-title glitch-text" data-text="TAGS DATABASE">
+            TAGS DATABASE
+        </h1>
+        <p class="section-desc">探索所有标签节点</p>
+    </div>
+    
+    <div class="tags-cloud">
+        {% set tags = get_taxonomy(kind="tags") %}
+        {% for tag in tags.items %}
+        <a href="{{ tag.permalink }}" class="tag-cloud-item">
+            <span class="tag-name">#{{ tag.name }}</span>
+            <span class="tag-count">[{{ tag.pages | length }}]</span>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

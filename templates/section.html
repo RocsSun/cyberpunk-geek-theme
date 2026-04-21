@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}{{ section.title }} | {{ config.title }}{% endblock %}
+
+{% block content %}
+<div class="section-page">
+    <div class="section-header">
+        <h1 class="section-title glitch-text" data-text="{{ section.title }}">
+            {{ section.title }}
+        </h1>
+        {% if section.description %}
+        <p class="section-desc">{{ section.description }}</p>
+        {% endif %}
+        <div class="section-stats">
+            <span class="stat-badge">{{ section.pages | length }} 篇文章</span>
+        </div>
+    </div>
+    
+    <div class="posts-list">
+        {% for page in section.pages %}
+        <article class="post-item">
+            <div class="item-content">
+                <div class="item-header">
+                    <span class="item-date">{{ page.date | date(format="%Y-%m-%d") }}</span>
+                    <div class="item-type">[DATA]</div>
+                </div>
+                <h2 class="item-title">
+                    <a href="{{ page.permalink }}">{{ page.title }}</a>
+                </h2>
+                {% if page.description %}
+                <p class="item-desc">{{ page.description }}</p>
+                {% endif %}
+                <div class="item-footer">
+                    {% if page.taxonomies.tags %}
+                    <div class="item-tags">
+                        {% for tag in page.taxonomies.tags %}
+                        <span class="tag">#{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    <a href="{{ page.permalink }}" class="item-link">>_ 接入 ⟶</a>
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+    
+    {% if paginator %}
+    <div class="pagination">
+        {% if paginator.previous %}
+        <a href="{{ paginator.previous }}" class="page-link prev">⟨ 上一页</a>
+        {% endif %}
+        <span class="page-current">{{ paginator.current_index }} / {{ paginator.number_pagers }}</span>
+        {% if paginator.next %}
+        <a href="{{ paginator.next }}" class="page-link next">下一页 ⟩</a>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

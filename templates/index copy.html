@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}{{ config.title }} | 首页{% endblock %}
+
+{% block content %}
+<!-- 英雄区 -->
+<div class="hero-section">
+    <div class="hero-content">
+        <h1 class="hero-title glitch-simple" data-text="{{ config.extra.hero_title | default(value='NEON REBELLION') }}">
+            {{ config.extra.hero_title | default(value='NEON REBELLION') }}
+        </h1>
+        <p class="hero-subtitle color-cycle">{{ config.description | default(value='潜入霓虹与代码的深渊') }}</p>
+        <div class="hero-buttons">
+            <a href="{{ get_url(path='/blog') }}" class="cyber-button primary pulse-ring">>_ 进入数据流</a>
+            <a href="{{ get_url(path='/about') }}" class="cyber-button secondary color-hover">>_ 关于作者</a>
+        </div>
+    </div>
+</div>
+
+<!-- 首页内容（从 Markdown 渲染） -->
+{% set index_page = get_section(path="_index.md") %}
+{% if index_page.content %}
+<div class="index-content">
+    {{ index_page.content | safe }}
+</div>
+{% endif %}
+
+<!-- 特性网格（如果配置启用） -->
+{% if config.extra.show_features %}
+<div class="features-section">
+    <div class="section-header">
+        <h2 class="section-title"><span class="title-bracket">[</span> 核心特性 <span class="title-bracket">]</span></h2>
+    </div>
+    <div class="features-grid">
+        <div class="feature-card border-glitch">
+            <div class="feature-icon">⚡</div>
+            <h3 class="color-cycle">霓虹视觉</h3>
+            <p>赛博朋克美学，故障动画与扫描线特效。</p>
+        </div>
+        <div class="feature-card border-glitch">
+            <div class="feature-icon">🔍</div>
+            <h3 class="color-cycle">全文搜索</h3>
+            <p>内置搜索引擎，快速定位数据片段。</p>
+        </div>
+        <div class="feature-card border-glitch">
+            <div class="feature-icon">📱</div>
+            <h3 class="color-cycle">响应式设计</h3>
+            <p>桌面与移动端完美适配。</p>
+        </div>
+        <div class="feature-card border-glitch">
+            <div class="feature-icon">🏷️</div>
+            <h3 class="color-cycle">标签云</h3>
+            <p>按主题聚合文章，探索知识网络。</p>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- 最新文章（如果配置启用） -->
+{% if config.extra.show_recent_posts %}
+<div class="recent-posts">
+    <div class="section-header">
+        <h2 class="section-title"><span class="title-bracket">[</span> 最新数据流 <span class="title-bracket">]</span></h2>
+    </div>
+    <div class="posts-grid">
+        {% set blog_section = get_section(path="blog/_index.md", metadata_only=true) %}
+        {% for post in blog_section.pages | slice(end=3) %}
+        <article class="post-card">
+            <div class="post-meta">
+                <span class="post-date">{{ post.date | date(format="%Y.%m.%d") }}</span>
+                {% if post.taxonomies.tags %}
+                <div class="post-tags">
+                    {% for tag in post.taxonomies.tags | slice(end=2) %}
+                    <span class="tag">#{{ tag }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            <h3 class="post-title">
+                <a href="{{ post.permalink }}">{{ post.title }}</a>
+            </h3>
+            <p class="post-excerpt">{{ post.description | default(value=post.content | striptags | truncate(length=100)) }}</p>
+            <a href="{{ post.permalink }}" class="read-more">>_ 读取数据 →</a>
+        </article>
+        {% else %}
+        <div class="no-posts">暂无文章，请先创建内容。</div>
+        {% endfor %}
+    </div>
+    {% if blog_section.pages | length > 3 %}
+    <div class="view-all">
+        <a href="{{ get_url(path='blog') }}" class="cyber-button">>_ 查看全部文章</a>
+    </div>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}

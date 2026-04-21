@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}搜索 | {{ config.title }}{% endblock %}
+
+{% block content %}
+<div class="search-page">
+    <div class="search-page-header">
+        <h1 class="search-page-title glitch-text" data-text=">_ SEARCH_DB">>_ SEARCH_DB</h1>
+        <p class="hero-subtitle">在数据流中检索...</p>
+    </div>
+    
+    <div class="search-input-group">
+        <input type="text" id="searchQuery" placeholder="输入关键词..." autocomplete="off">
+        <button id="searchButton">检索</button>
+    </div>
+    
+    <div id="searchArea">
+        <div class="search-stats" id="searchStats"></div>
+        <div id="searchResults" class="search-results-list"></div>
+    </div>
+</div>
+{% endblock %}

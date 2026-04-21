@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}关于 | {{ config.title }}{% endblock %}
+
+{% block content %}
+<div class="about-page">
+    <div class="section-header">
+        <h1 class="section-title glitch-text" data-text=">_ ABOUT">>_ ABOUT</h1>
+    </div>
+    <div class="about-content">
+        <div class="about-card">
+            {{ page.content | safe }}
+        </div>
+    </div>
+</div>
+{% endblock %}

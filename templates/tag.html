@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}标签: {{ term.name }} | {{ config.title }}{% endblock %}
+
+{% block content %}
+<div class="tag-section">
+    <div class="section-header">
+        <h1 class="section-title">
+            <span class="title-prefix">标签 / </span>
+            <span class="glitch-text" data-text="{{ term.name }}">{{ term.name }}</span>
+        </h1>
+        <div class="tag-stats">
+            <span class="stat-badge">{{ term.pages | length }} 篇文章</span>
+        </div>
+    </div>
+    
+    <div class="posts-list">
+        {% for page in term.pages %}
+        <article class="post-item compact">
+            <div class="item-content">
+                <div class="item-header">
+                    <span class="item-date">{{ page.date | date(format="%Y-%m-%d") }}</span>
+                </div>
+                <h2 class="item-title">
+                    <a href="{{ page.permalink }}">{{ page.title }}</a>
+                </h2>
+                <a href="{{ page.permalink }}" class="item-link">>_ 读取数据 ⟶</a>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

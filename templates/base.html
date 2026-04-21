@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="{{ lang | default(value='en') }}">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}{{ config.title }}{% endblock %}</title>
+    <meta name="description" content="{{ config.description }}" />
+
+    <!-- Google Fonts（赛博朋克风格字体） -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+    <!-- 主样式表 -->
+    <link rel="stylesheet" href="{{ get_url(path='css/main.css') }}" />
+
+    {% block extra_head %}{% endblock %}
+</head>
+
+<body>
+    <!-- 动态背景层 -->
+    <div class="cyber-grid"></div>
+    <div class="scan-line"></div>
+    <div class="glitch-overlay"></div>
+    <!-- 阅读进度条 -->
+    <div class="reading-progress" id="readingProgress"></div>
+
+    <!-- 导航栏 -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="{{ get_url(path='/') }}" class="logo-link title" data-text="{{ config.title }}">
+                    {{ config.title }}
+                </a>
+            </div>
+            <div class="nav-right">
+                <!-- 搜索框（桌面端） -->
+                <div class="search-wrapper">
+                    <form action="{{ get_url(path='/search') }}" method="get" class="search-form">
+                        <input type="text" name="q" placeholder="Search..." class="search-input" />
+                        <button type="submit" class="search-btn">🔍</button>
+                    </form>
+                </div>
+                <!-- 导航菜单 -->
+                <nav class="nav-menu">
+                    {% for nav_item in config.extra.header_nav %}
+                    <a href="{{ nav_item.url }}"
+                       class="nav-link"
+                       data-color="{{ loop.index }}"
+                       style="--index: {{ loop.index0 }};">
+                        {{ nav_item.name }}
+                    </a>
+                    {% endfor %}
+                </nav>
+                <!-- 移动端搜索图标 -->
+                <a href="{{ get_url(path='/search') }}" class="mobile-search-btn">🔍</a>
+                <div class="nav-toggle" id="navToggle">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主内容区域 -->
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- 页脚（仅当有内容时显示） -->
+    {% set has_footer = false %}
+    {% if config.extra.copyright or config.extra.icp or config.extra.social_links %}
+        {% set has_footer = true %}
+    {% endif %}
+
+    {% if has_footer %}
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-links">
+                <!-- 版权信息 -->
+                {% if config.extra.copyright %}
+                <span class="copyright color-cycle">{{ config.extra.copyright }}</span>
+                {% else %}
+                <span class="copyright color-cycle">© {{ now() | date(format="%Y") }} {{ 
+                    config.extra.author | default(value="Cyberpunk Blogger") }}. All rights reserved.</span>
+                {% endif %}
+
+                <!-- ICP 备案号 -->
+                {% if config.extra.icp %}
+                <span class="separator"></span>
+                <a href="{{ config.extra.icp_url | default(value='https://beian.miit.gov.cn/') }}" 
+                   class="footer-link color-cycle" 
+                   target="_blank" 
+                   rel="noopener noreferrer">
+                    {{ config.extra.icp }}
+                </a>
+                {% endif %}
+
+                <!-- 社交链接 -->
+                {% if config.extra.social_links %}
+                {% for link in config.extra.social_links %}
+                <span class="separator"></span>
+                <a href="{{ link.url }}" 
+                   class="footer-link color-cycle" 
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    {{ link.name }}
+                </a>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </footer>
+    {% endif %}
+
+    <!-- 主脚本 -->
+    <script src="{{ get_url(path='js/main.js') }}"></script>
+    
+    {% block extra_scripts %}{% endblock %}
+</body>
+
+</html>

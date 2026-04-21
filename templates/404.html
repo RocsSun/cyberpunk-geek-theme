@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}404 - 数据丢失{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="hero-content">
+        <h1 data-text="数据流中断">数据流中断</h1>
+        <p class="hero-subtitle">您请求的数据节点不存在或已被删除</p>
+        
+        <div class="error-code glitch-text" data-text="404">404</div>
+        <div class="hero-buttons">
+            <a href="{{ get_url(path='/') }}" class="cyber-button primary pulse-ring">>_ 返回主控制台</a>
+            <a href="{{ get_url(path='/blog') }}" class="cyber-button secondary color-hover">>_ 浏览数据流</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
