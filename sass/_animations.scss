@@ -1,0 +1,196 @@
+// ============================================
+// 动画关键帧与工具类
+// ============================================
+@import "variables";
+
+// ============================================
+// 一、动画关键帧定义
+// ============================================
+
+// 1. 故障动画
+@keyframes glitchSimple {
+    0%, 100% { text-shadow: 0 0 2px var(--neon-cyan); }
+    5% { text-shadow: -2px 0 var(--neon-pink), 2px 0 var(--neon-cyan); }
+    10% { text-shadow: 2px 0 var(--neon-pink), -2px 0 var(--neon-cyan); }
+}
+
+@keyframes glitchHeavy {
+    0%, 100% { transform: skew(0deg); }
+    2% { transform: skew(2deg); }
+    4% { transform: skew(-2deg); }
+}
+
+@keyframes glitchBefore {
+    0%, 96%, 100% { opacity: 0; transform: translate(0); clip-path: inset(0 0 0 0); }
+    97% { opacity: 1; transform: translate(-2px, 1px); clip-path: inset(20% 0 30% 0); }
+    98% { opacity: 1; transform: translate(-1px, -1px); clip-path: inset(50% 0 20% 0); }
+}
+
+@keyframes glitchAfter {
+    0%, 96%, 100% { opacity: 0; transform: translate(0); clip-path: inset(0 0 0 0); }
+    97% { opacity: 1; transform: translate(2px, -1px); clip-path: inset(10% 0 60% 0); }
+    98% { opacity: 1; transform: translate(1px, 1px); clip-path: inset(40% 0 30% 0); }
+}
+
+@keyframes glitchOnce {
+    0% { text-shadow: 0 0 2px var(--neon-cyan); transform: translate(0); }
+    20% { text-shadow: -2px 0 var(--neon-pink), 2px 0 var(--neon-cyan); transform: translate(-1px, 1px); }
+    80% { text-shadow: 2px 0 var(--neon-pink), -2px 0 var(--neon-cyan); transform: translate(1px, -1px); }
+    100% { text-shadow: 0 0 2px var(--neon-cyan); transform: translate(0); }
+}
+
+// 2. 颜色循环动画（使用具体颜色值，修复 CSS 变量兼容性问题）
+$color-list: map-values($neon-colors);
+$total: length($color-list);
+
+@keyframes colorCycle {
+    @for $i from 1 through $total {
+        $percent: ($i - 1) * (100% / $total);
+        
+        #{$percent} {
+            color: nth($color-list, $i);
+            text-shadow: 0 0 2px nth($color-list, $i);
+        }
+    }
+    100% {
+        color: nth($color-list, 1);
+        text-shadow: 0 0 2px nth($color-list, 1);
+    }
+}
+
+@keyframes colorPulse {
+    0%, 100% { color: var(--neon-cyan); text-shadow: 0 0 2px var(--neon-cyan); }
+    50% { color: var(--neon-pink); text-shadow: 0 0 8px var(--neon-pink); }
+}
+
+@keyframes rainbow {
+    0% { color: #ff00c8; text-shadow: 0 0 2px #ff00c8; }
+    20% { color: #ff6600; text-shadow: 0 0 2px #ff6600; }
+    40% { color: #ffff00; text-shadow: 0 0 2px #ffff00; }
+    60% { color: #00ff66; text-shadow: 0 0 2px #00ff66; }
+    80% { color: #0066ff; text-shadow: 0 0 2px #0066ff; }
+    100% { color: #ff00c8; text-shadow: 0 0 2px #ff00c8; }
+}
+
+// 3. 边框故障动画
+@keyframes borderGlitch {
+    0%, 100% { border-color: var(--neon-cyan); box-shadow: 0 0 2px var(--neon-cyan); }
+    25% { border-color: var(--neon-pink); box-shadow: 0 0 5px var(--neon-pink); }
+    50% { border-color: var(--neon-purple); box-shadow: 0 0 3px var(--neon-purple); }
+    75% { border-color: var(--neon-cyan); box-shadow: 0 0 4px var(--neon-cyan); }
+}
+
+// 4. 语法高亮呼吸动画
+@keyframes keywordBreath {
+    0% {
+        text-shadow: 0 0 2px currentColor;
+        opacity: 0.85;
+    }
+    50% {
+        text-shadow: 0 0 8px currentColor, 0 0 4px rgba(255, 255, 255, 0.5);
+        opacity: 1;
+    }
+    100% {
+        text-shadow: 0 0 2px currentColor;
+        opacity: 0.85;
+    }
+}
+
+@keyframes commentBreath {
+    0% {
+        text-shadow: none;
+        opacity: 0.5;
+    }
+    50% {
+        text-shadow: 0 0 2px rgba(160, 160, 160, 0.4);
+        opacity: 0.7;
+    }
+    100% {
+        text-shadow: none;
+        opacity: 0.5;
+    }
+}
+
+// 5. 菜单淡入动画
+@keyframes menuFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+// ============================================
+// 二、工具类（调用动画，使用变量管理时长）
+// ============================================
+
+// 故障类
+.glitch-simple {
+    animation: glitchSimple map-get($animation-durations, 'glitch-simple') infinite;
+}
+
+.glitch-heavy {
+    position: relative;
+    animation: glitchHeavy map-get($animation-durations, 'glitch-heavy') infinite;
+    
+    &::before,
+    &::after {
+        content: attr(data-text);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+    }
+    
+    &::before {
+        color: var(--neon-pink);
+        animation: glitchBefore map-get($animation-durations, 'glitch-heavy') infinite;
+    }
+    
+    &::after {
+        color: var(--neon-cyan);
+        animation: glitchAfter map-get($animation-durations, 'glitch-heavy') infinite;
+    }
+}
+
+.glitch-once {
+    animation: glitchOnce 0.3s ease-in-out forwards;
+}
+
+// 颜色切换类
+.color-cycle {
+    animation: colorCycle map-get($animation-durations, 'color-cycle') ease-in-out infinite;
+}
+
+.color-rainbow {
+    animation: rainbow map-get($animation-durations, 'rainbow') ease-in-out infinite;
+}
+
+.color-pulse {
+    animation: colorPulse map-get($animation-durations, 'color-pulse') ease-in-out infinite;
+}
+
+// 边框故障类
+.border-glitch {
+    animation: borderGlitch map-get($animation-durations, 'border-glitch') infinite;
+}
+
+// 悬停变色类
+.color-hover {
+    transition: all 0.3s;
+    &:hover {
+        color: var(--neon-pink);
+        text-shadow: 0 0 5px var(--neon-pink);
+    }
+}
+
+// 组合类
+.glitch-color-cycle {
+    animation: glitchHeavy map-get($animation-durations, 'glitch-heavy') infinite, 
+               colorCycle map-get($animation-durations, 'color-cycle') ease-in-out infinite;
+}

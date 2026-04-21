@@ -1,0 +1,47 @@
+// ============================================
+// 变量定义
+// ============================================
+
+:root {
+    // 霓虹色（CSS 变量，用于 JS 和简单场景）
+    --neon-cyan: #00f3ff;
+    --neon-pink: #ff00c8;
+    --neon-purple: #b200ff;
+    --neon-blue: #0066ff;
+    --neon-green: #00ff66;
+    --neon-yellow: #ffcc00;
+    --neon-orange: #ff6600;
+    
+    // 背景色
+    --bg-dark: #0d0221;
+    --bg-darker: #050010;
+    
+    // 文字色
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+    
+    // 字体
+    --font-mono: "Share Tech Mono", "Consolas", monospace;
+    --font-sans: "Space Grotesk", sans-serif;
+}
+
+// SCSS 变量（用于动画循环，使用具体颜色值）
+$neon-colors: (
+    1: #00f3ff,
+    2: #ff00c8,
+    3: #b200ff,
+    4: #0066ff,
+    5: #00ff66,
+    6: #ffcc00,
+    7: #ff6600
+);
+
+// 动画时长配置
+$animation-durations: (
+    'glitch-simple': 3s,
+    'glitch-heavy': 4s,
+    'color-cycle': 6s,
+    'rainbow': 8s,
+    'color-pulse': 2s,
+    'border-glitch': 2s
+);

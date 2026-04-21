@@ -1,0 +1,155 @@
+// ============================================
+// 语法高亮样式（独立文件）
+// 赛博朋克风格
+// ============================================
+
+// 终端标题（只保留特有样式，pre 基础样式已在 _base.scss 中定义）
+.article-content pre::before {
+    content: ">_ terminal";
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    background: var(--bg-dark);
+    padding: 0 0.5rem;
+    font-size: 0.7rem;
+    color: var(--neon-pink);
+    font-family: var(--font-mono);
+    border-radius: 4px;
+    border: 1px solid var(--neon-pink);
+    z-index: 1;
+}
+
+// ===== 语法高亮颜色（动画在 _animations.scss 中定义）=====
+
+// 关键字
+.z-keyword,
+.z-storage,
+.z-storage-type,
+.z-storage-modifier,
+.z-keyword-control,
+.z-keyword-operator-word {
+    color: var(--neon-pink) !important;
+    font-weight: bold !important;
+    animation: keywordBreath 2s ease-in-out infinite !important;
+}
+
+// 函数名
+.z-entity.z-name.z-function,
+.z-function,
+.z-support-function {
+    color: var(--neon-cyan) !important;
+    animation: keywordBreath 2s ease-in-out infinite 0.2s !important;
+}
+
+// 宏
+.z-entity.z-name.z-function.z-macro,
+.z-macro {
+    color: var(--neon-purple) !important;
+    animation: keywordBreath 2s ease-in-out infinite 0.4s !important;
+}
+
+// 字符串
+.z-string,
+.z-punctuation-definition-string {
+    color: #00ff66 !important;
+    animation: keywordBreath 2.5s ease-in-out infinite 0.1s !important;
+}
+
+// 标点符号
+.z-punctuation {
+    color: var(--text-secondary) !important;
+}
+
+// 数字
+.z-constant-numeric,
+.z-constant-language-boolean {
+    color: var(--neon-purple) !important;
+    animation: keywordBreath 2.5s ease-in-out infinite 0.3s !important;
+}
+
+// 注释
+.z-comment {
+    color: var(--text-secondary) !important;
+    font-style: italic !important;
+    animation: commentBreath 4s ease-in-out infinite !important;
+}
+
+// 类型
+.z-type,
+.z-support-type,
+.z-entity-name-type {
+    color: var(--neon-blue) !important;
+    animation: keywordBreath 2.5s ease-in-out infinite 0.5s !important;
+}
+
+// 操作符
+.z-operator,
+.z-keyword-operator {
+    color: var(--neon-pink) !important;
+    animation: keywordBreath 2s ease-in-out infinite 0.15s !important;
+}
+
+// 变量
+.z-variable,
+.z-variable-other {
+    color: var(--text-primary) !important;
+}
+
+// 常量
+.z-constant,
+.z-constant-language {
+    color: var(--neon-yellow) !important;
+    animation: keywordBreath 2.5s ease-in-out infinite 0.25s !important;
+}
+
+// 标签
+.z-tag,
+.z-entity-name-tag {
+    color: var(--neon-pink) !important;
+    animation: keywordBreath 2s ease-in-out infinite 0.35s !important;
+}
+
+// 属性
+.z-attribute,
+.z-entity-other-attribute-name {
+    color: var(--neon-cyan) !important;
+    animation: keywordBreath 2s ease-in-out infinite 0.45s !important;
+}
+
+// 预处理指令
+.z-meta-preprocessor {
+    color: var(--neon-purple) !important;
+    animation: keywordBreath 2.5s ease-in-out infinite 0.55s !important;
+}
+
+// 转义字符
+.z-constant-character-escape {
+    color: var(--neon-yellow) !important;
+    animation: keywordBreath 2s ease-in-out infinite 0.2s !important;
+}
+
+// 存储类型
+.z-storage-type-struct,
+.z-storage-type-enum,
+.z-storage-type-trait {
+    color: var(--neon-pink) !important;
+    animation: keywordBreath 2s ease-in-out infinite 0.3s !important;
+}
+
+// 内置函数
+.z-support-function-builtin {
+    color: var(--neon-cyan) !important;
+    animation: keywordBreath 2.5s ease-in-out infinite 0.4s !important;
+}
+
+// 参数
+.z-variable-parameter {
+    color: var(--neon-orange) !important;
+    font-style: italic !important;
+}
+
+// 行号
+.giallo-ln {
+    color: var(--text-secondary) !important;
+    opacity: 0.5 !important;
+}

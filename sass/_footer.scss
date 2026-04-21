@@ -1,0 +1,59 @@
+// ============================================
+// 页脚样式
+// ============================================
+
+.footer {
+    border-top: 1px solid var(--neon-cyan);
+    background: rgba(13, 2, 33, 0.95);
+    padding: 0.8rem 0;
+    margin-top: 2rem;
+    width: 100%;
+
+    .footer-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+    }
+
+    .footer-links {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        row-gap: 0.5rem;
+    }
+
+    .separator {
+        color: var(--text-secondary);
+        font-size: 0.75rem;
+    }
+
+    .copyright {
+        color: var(--neon-cyan);
+        font-size: 0.75rem;
+        text-shadow: 0 0 2px var(--neon-cyan);
+    }
+
+    .footer-link {
+        color: var(--neon-cyan);
+        text-decoration: none;
+        font-size: 0.75rem;
+        text-shadow: 0 0 2px var(--neon-cyan);
+        transition: all 0.3s;
+
+        &:hover {
+            color: var(--neon-pink);
+            text-shadow: 0 0 5px var(--neon-pink);
+            text-decoration: underline;
+        }
+    }
+}
+
+// 移动端响应式
+@media (max-width: 640px) {
+    .footer {
+        .footer-links { gap: 0.3rem; }
+        .footer-container { padding: 0 1rem; }
+    }
+}
