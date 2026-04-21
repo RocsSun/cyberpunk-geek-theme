@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>所有标签</h1>
+
+{% for term in terms %}
+<article>
+    <h2>
+        <a href="{{ term.permalink }}">{{ term.name }}</a>
+        <small>({{ term.pages | length }} 篇文章)</small>
+    </h2>
+</article>
+{% endfor %}
+{% endblock content %}

@@ -3,84 +3,49 @@
 {% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
 {% block content %}
-<article class="post-article">
-    <!-- 标题居中 -->
-    <header class="post-header">
-        
-        
-        <!-- 日期和阅读时间在标题下方 -->
-        <div class="article-meta-center">
-            <h1 class="article-title glitch-text" data-text="{{ page.title }}">{{ page.title }}</h1>
-            {% if page.date %}
-            <span class="meta-item">
-                <span class="meta-icon">📡</span>
-                <time datetime="{{ page.date }}">{{ page.date | date(format="%Y.%m.%d") }}</time>
-            </span>
+
+<div class="page-wrapper">
+    <!-- 左侧 TOC（始终显示） -->
+{% if page.toc %}
+<aside class="page-toc-fixed">
+    <div class="toc-title">>_ 目录</div>
+    <ul class="toc-list">
+        {% for h1 in page.toc %}
+        <li>
+            <a href="{{ h1.permalink | safe }}" class="toc-link toc-h1">{{ h1.title }}</a>
+            {% if h1.children %}
+            <ul class="toc-children">
+                {% for h2 in h1.children %}
+                <li>
+                    <a href="{{ h2.permalink | safe }}" class="toc-link toc-h2">{{ h2.title }}</a>
+                </li>
+                {% endfor %}
+            </ul>
             {% endif %}
-            
-            {% if page.reading_time %}
-            <span class="meta-item">
-                <span class="meta-icon">⏱️</span>
-                <span>{{ page.reading_time }} min read</span>
-            </span>
-            {% endif %}
-        </div>
-        
-        {% if page.description %}
-        <p class="article-desc">{{ page.description }}</p>
-        {% endif %}
-    </header>
-    
-    <!-- 目录（可选） -->
-    {% if page.extra.toc and page.toc %}
-    <div class="toc-container">
-        <h2 class="toc-title">>_ 目录</h2>
-        <ul class="toc-list">
-            {% for h1 in page.toc %}
-            <li class="toc-h1">
-                <a href="{{ h1.permalink | safe }}">{{ h1.title }}</a>
-                {% if h1.children %}
-                <ul class="toc-h2-list">
-                    {% for h2 in h1.children %}
-                    <li><a href="{{ h2.permalink | safe }}">{{ h2.title }}</a></li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
-    {% endif %}
-    
-    <!-- 文章内容 -->
-    <div class="article-content">
-        {{ page.content | safe }}
-    </div>
-    
-    <!-- 文章标签 -->
-    {% if page.taxonomies.tags %}
-    <div class="article-tags">
-        <span class="tags-label">🏷️ 标签：</span>
-        {% for tag in page.taxonomies.tags %}
-        <a href="{{ get_taxonomy_url(kind='tags', name=tag) }}" class="tag-link">#{{ tag }}</a>
+        </li>
         {% endfor %}
-    </div>
-    {% endif %}
-    
-    <!-- 文章导航（上一篇/下一篇） -->
-    <div class="post-nav">
-        {% if page.later %}
-        <a href="{{ page.later.permalink }}" class="nav-link prev-post">
-            <span class="nav-dir">⟨ 上一篇</span>
-            <span class="nav-title">{{ page.later.title }}</span>
-        </a>
-        {% endif %}
-        {% if page.earlier %}
-        <a href="{{ page.earlier.permalink }}" class="nav-link next-post">
-            <span class="nav-dir">下一篇 ⟩</span>
-            <span class="nav-title">{{ page.earlier.title }}</span>
-        </a>
-        {% endif %}
-    </div>
-</article>
+    </ul>
+</aside>
+{% endif %}
+    <!-- 文章内容 -->
+    <article>
+        <header>
+            <h1 class="page-title glitch-heavy" data-text="{{ page.title }}">{{ page.title }}</h1>
+            <div>
+                {% if page.date %}
+                <time datetime="{{ page.date | date(format='%+') }}">
+                    >_ {{ page.date | date(format="%Y-%m-%d") }}
+                    {% if page.reading_time %}
+                <span>// {{ page.reading_time }} min read</span>
+                {% endif %}
+                </time>
+                {% endif %}
+                
+            </div>
+        </header>
+        <div>
+            {{ page.content | safe }}
+        </div>
+    </article>
+
 {% endblock %}

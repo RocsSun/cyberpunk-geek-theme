@@ -3,25 +3,27 @@
 // ============================================
 
 // 1. 变量配置
-@import "../variables";
+@use  "../variables";
 // 8. 动画工具类
-@import "../animations";
+@use  "../animations";
 
 // 2. 基础重置
-@import "../base";
+@use  "../base";
 
 // 3. 背景特效
-@import "../effects";
+@use  "../effects";
 
 // 4. 导航栏
-@import "../navbar";
+@use  "../navbar";
 
 // 5. 布局
-@import "../layout";
+@use  "../layout";
 
 // 6. 文章样式
 // @import "../article";
 
 // 7. 页脚
-@import "../footer";
+@use  "../footer";
 
+// 8. 语法高亮（独立文件，预处理器不支持 @use）
+@import "../syntax";

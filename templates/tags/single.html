@@ -1,0 +1,50 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="tag-header">
+    <h1>{{ term.name }}</h1>
+    <span class="tag-stats">[{{ term.pages | length }} 个文件]</span>
+</div>
+
+<div class="posts-list">
+    {% for page in term.pages %}
+    <article class="post-item">
+        <h2 class="post-title">
+            <a href="{{ page.permalink }}">{{ page.title }}</a>
+        </h2>
+        
+        {% if page.date %}
+        <div class="post-meta">
+            <span class="cyber-date">[{{ page.date | date(format="%Y.%m.%d") }}]</span>
+        </div>
+        {% endif %}
+        
+        {% if page.description %}
+        <p class="post-description">{{ page.description }}</p>
+        {% endif %}
+        
+        <!-- 显示文章内的标签 -->
+        {% if page.taxonomies.tags %}
+        <div class="post-tags">
+            <span class="tag-label">>_ 标签:</span>
+            {% for tag in page.taxonomies.tags %}
+            <a href="{{ get_taxonomy_url(kind="tags", name=tag) }}" class="tag-link">{{ tag }}</a>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </article>
+    {% else %}
+    <div class="no-posts">
+        <p class="cyber-warning">[!] 暂无文章</p>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- 返回链接 -->
+<div class="back-link">
+    <a href="{{ get_url(path="/tags") }}" class="cyber-button">
+        ← [ 返回所有标签 ]
+    </a>
+</div>
+{% endblock content %}

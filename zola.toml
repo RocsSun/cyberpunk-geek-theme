@@ -11,6 +11,11 @@ build_search_index = false
 
 default_language = "zh"
 
+# Taxonomies
+taxonomies = [
+    {name = "tags", feed = true, paginate_by = 10},
+]
+
 [markdown]
 
 [markdown.highlighting]
@@ -23,7 +28,7 @@ theme = "catppuccin-mocha"
 
 header_nav = [
     { url = "/", name = "Home" },
-    { url = "/post", name = "Posts" }
+    { url = "/post", name = "Posts" },
     { url = "/tags", name = "Tags" },
     { url = "/about", name = "About" },
 ]

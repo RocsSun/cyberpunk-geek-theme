@@ -3,22 +3,6 @@
 // 赛博朋克风格
 // ============================================
 
-// 终端标题（只保留特有样式，pre 基础样式已在 _base.scss 中定义）
-.article-content pre::before {
-    content: ">_ terminal";
-    position: absolute;
-    top: -10px;
-    left: 10px;
-    background: var(--bg-dark);
-    padding: 0 0.5rem;
-    font-size: 0.7rem;
-    color: var(--neon-pink);
-    font-family: var(--font-mono);
-    border-radius: 4px;
-    border: 1px solid var(--neon-pink);
-    z-index: 1;
-}
-
 // ===== 语法高亮颜色（动画在 _animations.scss 中定义）=====
 
 // 关键字
